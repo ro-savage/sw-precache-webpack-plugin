@@ -69,9 +69,14 @@ test.before(() => {
 
 test('will use default options', t => {
 
+  const altConfig = {};
+
   const plugin = new SWPrecacheWebpackPlugin();
 
-  t.deepEqual(plugin.options, DEFAULT_OPTIONS);
+  t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
+    ...DEFAULT_OPTIONS,
+  });
 
 });
 
@@ -84,6 +89,7 @@ test('can set cacheId', t => {
   const plugin = new SWPrecacheWebpackPlugin(altConfig);
 
   t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
     ...DEFAULT_OPTIONS,
     ...altConfig,
   });
@@ -99,6 +105,7 @@ test('can set directoryIndex', t => {
   const plugin = new SWPrecacheWebpackPlugin(altConfig);
 
   t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
     ...DEFAULT_OPTIONS,
     ...altConfig,
   });
@@ -115,6 +122,7 @@ test('can set dynamicUrlToDependencies', t => {
   const plugin = new SWPrecacheWebpackPlugin(altConfig);
 
   t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
     ...DEFAULT_OPTIONS,
     ...altConfig,
   });
@@ -129,6 +137,7 @@ test('can set handleFetch', t => {
   const plugin = new SWPrecacheWebpackPlugin(altConfig);
 
   t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
     ...DEFAULT_OPTIONS,
     ...altConfig,
   });
@@ -143,6 +152,22 @@ test('can set filename', t => {
   const plugin = new SWPrecacheWebpackPlugin(altConfig);
 
   t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
+    ...DEFAULT_OPTIONS,
+    ...altConfig,
+  });
+});
+
+test('can set outputFilename', t => {
+
+  const altConfig = {
+    outputFilename: 'outputFile-sw.js',
+  };
+
+  const plugin = new SWPrecacheWebpackPlugin(altConfig);
+
+  t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
     ...DEFAULT_OPTIONS,
     ...altConfig,
   });
@@ -157,6 +182,7 @@ test('can set filepath', t => {
   const plugin = new SWPrecacheWebpackPlugin(altConfig);
 
   t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
     ...DEFAULT_OPTIONS,
     ...altConfig,
   });
@@ -171,6 +197,7 @@ test('can set minify', t => {
   const plugin = new SWPrecacheWebpackPlugin(altConfig);
 
   t.deepEqual(plugin.options, {
+    outputFilename: altConfig.filename || DEFAULT_OPTIONS.filename,
     ...DEFAULT_OPTIONS,
     ...altConfig,
   });

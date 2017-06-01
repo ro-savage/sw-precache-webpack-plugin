@@ -36,16 +36,18 @@ class SWPrecacheWebpackPlugin {
    * // plugin options:
    * @param {string} [options.filename] - Service worker filename, default is 'service-worker.js'
    * @param {string} [options.filepath] - Service worker path and name, default is to use webpack.output.path + options.filename
+   * @param {string} [options.outputFilename] - The outputted serviceworker filename. Defaults to same a options.filename.
    * @param {RegExp} [options.staticFileGlobsIgnorePatterns[]] - Define an optional array of regex patterns to filter out of staticFileGlobs
    * @param {boolean} [options.mergeStaticsConfig=false] - Merge provided staticFileGlobs and stripPrefix(Multi) with webpack's config, rather than having those take precedence
    * @param {boolean} [options.minify=false] - Minify the generated Service worker file using UglifyJS
    * @param {boolean} [options.debug=false] - Output error and warning messages
    */
-  constructor(options) {
+  constructor(options = {}) {
     // generated configuration options
     this.config = {};
     // configuration options passed by user
     this.options = {
+      outputFilename: options.filename || DEFAULT_OPTIONS.filename,
       ...DEFAULT_OPTIONS,
       ...options,
     };
@@ -94,7 +96,7 @@ class SWPrecacheWebpackPlugin {
     const {outputPath} = compiler;
 
     // outputPath + filename or the user option
-    const {filepath = path.resolve(outputPath, this.options.filename)} = this.options;
+    const {filepath = path.resolve(outputPath, this.options.outputFilename)} = this.options;
 
     // get the public path specified in webpack config
     const {publicPath = DEFAULT_PUBLIC_PATH} = compiler.options.output;
